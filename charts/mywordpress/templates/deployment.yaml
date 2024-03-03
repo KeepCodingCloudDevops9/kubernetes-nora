@@ -1,0 +1,66 @@
+# WordPress Deployment
+{{- if .Values.wordpress.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mywordpress.fullname" . }}
+  labels:
+    {{- include "mywordpress.labels" . | nindent 4 }}
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      {{- include "mywordpress.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "mywordpress.selectorLabels" . | nindent 8 }}
+    spec:
+      affinity: {{ .Values.affinity }}
+      containers:
+        - name: wordpress
+          image: {{ .Values.wordpress.image }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.wordpress.containerPort }}
+          envFrom:
+          - configMapRef:
+              name: {{ .Values.wordpress.configmap }}
+{{- end }}
+
+# MariaDB Deployment
+{{- if .Values.mariadb.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-mariadb
+  labels:
+    app: {{ .Values.mariadb.label }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.mariadb.label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.mariadb.label }}
+    spec:
+      containers:
+        - name: {{ .Values.mariadb.label }}
+          image: {{ .Values.mariadb.image }}
+          ports:
+            - name: {{ .Values.mariadb.label }}
+              containerPort: {{ .Values.mariadb.containerPort }}
+          envFrom:
+          - secretRef:
+              name: {{ .Values.mariadb.secretRef }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
