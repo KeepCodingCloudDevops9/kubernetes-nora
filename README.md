@@ -1,6 +1,6 @@
 # kubernetes-nora
 
-### **k8s**
+## **k8s**
 
 Se presenta una aplicación en kubernetes montada con wordpress y mysql.
 
@@ -16,11 +16,7 @@ Para ejecutar los archivos anteriormente mencionados se debe usar el siguiente c
 
     kubectl apply -f .
 
-*Nota: Si utilizas la aplicación con windows y docker descktop el tendrás que abrir el puerto que te dará el siguiente comando:
-
->minikube service mywordpress --url
-
-### **Charts**
+## **Charts**
 
 En este caso se trata de una aplicación wordpress y mariadb, creada con 'helm'.
 
