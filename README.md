@@ -16,6 +16,10 @@ Para ejecutar los archivos anteriormente mencionados se debe usar el siguiente c
 
     kubectl apply -f .
 
+*Nota: Si utilizas la aplicación con minikube el tendrás que abrir el puerto que te dará el siguiente comando:
+
+>minikube service wordpress-service --url
+
 ## **Charts**
 
 En este caso se trata de una aplicación wordpress y mariadb, creada con 'helm'.
@@ -31,6 +35,6 @@ Para eliminar los paquetes que hemos creado:
     helm uninstall mywordpress
 
 
-*Nota: Si utilizas la aplicación con windows y docker descktop el tendrás que abrir el puerto que te dará el siguiente comando:
+*Nota: Si utilizas la aplicación con minikube tendrás que abrir el puerto que te dará el siguiente comando:
 
 >minikube service mywordpress --url
